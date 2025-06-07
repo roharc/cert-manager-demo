@@ -256,7 +256,7 @@ k delete ingress nginx
 helm delete my-ingress-nginx
 ```
 
-#### 2.51 enable gateway-api enable certmanager
+#### 2.51 enable gateway-api for certmanager
 
 ```
 helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager \
