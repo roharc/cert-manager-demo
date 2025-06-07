@@ -265,7 +265,7 @@ helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manag
   --set config.enableGatewayAPI=true
 ```
 
-### install crds and nginx-gateway-fabric:
+#### install crds and nginx-gateway-fabric:
 
 ```
 kubectl kustomize "https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard?ref=v1.6.2" | kubectl apply -f -
