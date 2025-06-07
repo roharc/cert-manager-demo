@@ -1,5 +1,5 @@
 # How To: setup step CA and integrate into kubernetes with cert-manager  
-## 1. Setup CA with step CA  
+## 1. Setup CA and ACME provider with step CA  
 
 ### Download and install packages  
 https://smallstep.com/docs/step-ca/installation/  
