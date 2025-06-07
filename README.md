@@ -167,7 +167,8 @@ helm install \
 
 ### 2.3 setup with cert-manager and ingress controller
 
-> :warning: **setup with ingress-controller and gateway-api are exclusive**: with a default k8s config you cannot have both at the same time as they're binding same ports!
+> :warning: **setup with ingress-controller and gateway-api are exclusive**:  
+with a default k8s config you cannot have both at the same time as they're binding same ports!
 
 
 
