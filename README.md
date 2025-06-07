@@ -1,7 +1,7 @@
 # How To: setup step CA and integrate into kubernetes with cert-manager  
 ## 1. Setup CA and ACME provider with step CA  
 
-### Download and install packages  
+#### Download and install packages  
 https://smallstep.com/docs/step-ca/installation/  
 
 ```
@@ -12,7 +12,7 @@ wget https://dl.smallstep.com/certificates/docs-ca-install/latest/step-ca_amd64.
 sudo dpkg -i step-ca_amd64.deb
 ```
 
-### Setup service user   
+#### Setup service user   
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#create-a-service-user-to-run-step-ca
 
@@ -20,13 +20,13 @@ https://smallstep.com/docs/step-ca/certificate-authority-server-production/#crea
 sudo useradd --system --home /etc/step-ca --shell /bin/false step
 ```  
 
-### Grant capability to bind portnumbers less than 1024 to step-ca binary
+#### Grant capability to bind portnumbers less than 1024 to step-ca binary
 
 ```
 sudo setcap CAP_NET_BIND_SERVICE=+eip $(which step-ca)
 ```  
 
-### Initialize CA
+#### Initialize CA
 
 ```
 step ca init
@@ -46,7 +46,7 @@ Choose a password for your CA keys and first provisioner.
 ✔ [leave empty and we'll generate one]:
 ```
 
-### Move step-ca to `/etc/step-ca` and change ownership
+#### Move step-ca to `/etc/step-ca` and change ownership
 
 ```
 sudo mkdir /etc/step-ca
@@ -54,7 +54,7 @@ sudo mv ~/.step/* /etc/step-ca
 sudo chown -R step:step /etc/step-ca
 ```
 
-### Modify paths in config files
+#### Modify paths in config files
 
 ```
 sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/ca.json
@@ -62,7 +62,7 @@ sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/defaults.json
 ```
 (use `sed -i` to actually write the files after checking)
 
-### Create passwordfile and change ownership
+#### Create passwordfile and change ownership
 
 ```
 sudo vi /etc/step-ca/password.txt
@@ -71,7 +71,7 @@ sudo vi /etc/step-ca/password.txt
 sudo chown step:step /etc/step-ca/password.txt
 ```
 
-### Create unitfile, start and check service
+#### Create unitfile, start and check service
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#running-step-ca-as-a-daemon
 ```
@@ -81,7 +81,7 @@ sudo vi  /etc/systemd/system/step-ca.service
 sudo systemctl enable --now step-ca && sudo systemctl status step-ca
 ```
 
-### Add ACME provisioner and restart service
+#### Add ACME provisioner and restart service
 
 ```
 sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url https://127.0.0.1 --root /etc/step-ca/certs/root_ca.crt
@@ -93,7 +93,7 @@ sudo systemctl restart step-ca
 sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://127.0.0.1
 ```
 
-### fetch CA Bundle for k8s integration
+#### fetch CA Bundle for k8s integration
 
 ```
 sudo cat /etc/step-ca/certs/intermediate_ca.crt /etc/step-ca/certs/root_ca.crt > ca_bundle.crt && chown xxx:xxx ca_bundle.crt
@@ -103,31 +103,31 @@ sudo cat /etc/step-ca/certs/intermediate_ca.crt /etc/step-ca/certs/root_ca.crt >
 
 prerequisites: Kubernetes Node with helm installed
 
-### scp CA Bundle from pki node
+#### scp CA Bundle from pki node
 
 ```
 scp pki-demo:ca_bundle.crt .
 ```
 
-### try to curl CA
+#### try to curl CA
 
 ```
 curl https://pki-demo.home.arpa
 ```
 
-### add CA to system trust store
+#### add CA to system trust store
 
 ```
 sudo cp ca_bundle.crt /usr/local/share/ca-certificates/ && sudo update-ca-certificates
 ```
 
-### curl CA once more to confirm trust
+#### curl CA once more to confirm trust
 
 ```
 curl https://pki-demo.home.arpa
 ```
 
-### install step-cli and request cert as a test
+#### install step-cli and request cert as a test
 
 ```
 wget https://dl.smallstep.com/cli/docs-ca-install/latest/step-cli_amd64.deb
