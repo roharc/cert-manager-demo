@@ -138,7 +138,26 @@ sudo dpkg -i step-cli_amd64.deb
 sudo step ca certificate k3s-demo.home.arpa k3s-demo.crt k3s-demo.key --acme https://pki-demo.home.arpa/acme/acme/directory --san k3s-demo.home.arpa --san k3s-demo --san 192.168.0.98
 ```
 
-### 2.2 install cert-manager
+### 2.2 deploy app for testing
+
+#### apply manifests
+```
+k apply -f cert-manager-demo/application_manifests/nginx-pod.yaml
+k apply -f application_manifests/nginx-service.yaml
+```
+
+### retrieve CLUSTER-IP 
+```
+CLUSTER_IP=$(k get svc nginx -o jsonpath='{.spec.clusterIP}')
+```
+```
+curl http://$CLUSTER_IP:8088
+```
+
+
+
+
+### 2.3 install cert-manager
 
 https://cert-manager.io/docs/installation/helm/
 
@@ -165,7 +184,7 @@ helm install \
   --set crds.enabled=true
 ```
 
-### 2.3 setup with cert-manager and ingress controller
+### 2.4 setup with cert-manager and ingress controller
 
 > :warning: **setup with ingress-controller and gateway-api are exclusive**:  
 with a default k8s config you cannot have both at the same time as they're binding same ports!
