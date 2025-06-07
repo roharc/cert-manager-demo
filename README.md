@@ -20,7 +20,7 @@ https://smallstep.com/docs/step-ca/certificate-authority-server-production/#crea
 sudo useradd --system --home /etc/step-ca --shell /bin/false step
 ```  
 
-### grant capabilty to bind portnumbers less than 1024 to step-ca binary
+### grant capability to bind portnumbers less than 1024 to step-ca binary
 
 ```
 sudo setcap CAP_NET_BIND_SERVICE=+eip $(which step-ca)
