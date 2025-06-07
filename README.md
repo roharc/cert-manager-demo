@@ -146,16 +146,15 @@ k apply -f cert-manager-demo/application_manifests/nginx-pod.yaml
 k apply -f application_manifests/nginx-service.yaml
 ```
 
-### retrieve CLUSTER-IP 
+#### retrieve CLUSTER-IP 
 ```
 CLUSTER_IP=$(k get svc nginx -o jsonpath='{.spec.clusterIP}')
 ```
+
+#### test application by curling the service
 ```
 curl http://$CLUSTER_IP:8088
 ```
-
-
-
 
 ### 2.3 install cert-manager
 
@@ -186,7 +185,7 @@ helm install \
 
 ### 2.4 setup with cert-manager and ingress controller
 
-> :warning: **setup with ingress-controller and gateway-api are exclusive**:  
+> :warning: **setup with ingress-controller (2.4) and gateway-api (2.5) are exclusive**:  
 with a default k8s config you cannot have both at the same time as they're binding same ports!
 
 
