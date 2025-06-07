@@ -87,7 +87,10 @@ sudo systemctl enable --now step-ca && sudo systemctl status step-ca
 sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url https://127.0.0.1 --root /etc/step-ca/certs/root_ca.crt
 ```
 ```
-sudo systemctl restart step-ca && sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://127.0.0.1
+sudo systemctl restart step-ca
+```
+```
+sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://127.0.0.1
 ```
 
 ## 2. Integrate PKI into kubernetes with cert-manager
