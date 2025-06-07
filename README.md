@@ -183,10 +183,39 @@ helm install \
   --set crds.enabled=true
 ```
 
-### 2.4 setup with cert-manager and ingress controller
+### 2.4 setup with ingress controller
 
-> :warning: **setup with ingress-controller (2.4) and gateway-api (2.5) are exclusive**:  
+> :warning: **setup with ingress controller (2.4) and gateway-api (2.5) are exclusive**:  
 with a default k8s config you cannot have both at the same time as they're binding same ports!
+
+#### install ingress-nginx
+
+https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx?modal=install
+
+```
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+```
+```
+helm install my-ingress-nginx ingress-nginx/ingress-nginx --version 4.12.1
+```
+
+#### deploy and inspect a clusterissuer
+
+```
+k apply -f cert-manager-demo/ingress_manifests/clusterissuer.yaml
+```
+```
+k get clusterissuer
+```
+```
+k apply -f cert-manager-demo/ingress_manifests/ingress.yaml
+```
+```
+k get ingress nginx
+```
+
+
+
 
 
 
