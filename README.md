@@ -76,8 +76,7 @@ https://smallstep.com/docs/step-ca/certificate-authority-server-production/#runn
 sudo vi  /etc/systemd/system/step-ca.service
 ```
 ```
-sudo systemctl enable --now step-ca
-sudo systemctl status step-ca
+sudo systemctl enable --now step-ca && sudo systemctl status step-ca
 ```
 
 ### add ACME provisioner and reload service
