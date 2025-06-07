@@ -29,4 +29,4 @@ spec:
       certificateRefs:
       - kind: Secret
         group: ""
-        name: nginx-k3s-demo-tls
+        name: nginx-k3s-demo-home-arpa 
