@@ -54,6 +54,14 @@ sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/ca.json
 sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/defaults.json
 ```
 (use `sed -i` to actually write the files after checking)
+
+### create passwordfile
+
+```
+sudo vi /etc/step-ca/password.txt
+sudo chown step:step /etc/step-ca/password.txt
+```
+
 ### create unitfile
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#running-step-ca-as-a-daemon
@@ -63,18 +71,12 @@ sudo systemctl enable --now step-ca
 sudo systemctl status step-ca
 ```
 
-### create passwordfile
-
-```
-sudo vi /etc/step-ca/password.txt
-sudo chown step:step /etc/step-ca/password.txt
-```
-
 ### add ACME provisioner and restart (reload?) service
 
 ```
 sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url https://pki-demo.home.arpa --root /etc/step-ca/certs/root_ca.crt
 systemctl reload step-ca
+sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://pki-demo.home.arpa
 ```
 
 ## 2. integrate PKI into kubernetes with cert-manager
