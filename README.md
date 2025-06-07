@@ -25,7 +25,10 @@ https://smallstep.com/docs/step-ca/certificate-authority-server-production/#crea
 ### initialize CA
 
 ```
-$ step ca init
+step ca init
+```
+
+```
 ✔ Deployment Type: Standalone
 What would you like to name your new PKI?
 ✔ (e.g. Smallstep): pki-demo
@@ -62,11 +65,13 @@ sudo vi /etc/step-ca/password.txt
 sudo chown step:step /etc/step-ca/password.txt
 ```
 
-### create unitfile
+### create unitfile, start and check service
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#running-step-ca-as-a-daemon
 ```
 sudo vi  /etc/systemd/system/step-ca.service
+```
+```
 sudo systemctl enable --now step-ca
 sudo systemctl status step-ca
 ```
