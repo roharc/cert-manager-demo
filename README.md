@@ -93,7 +93,52 @@ sudo systemctl restart step-ca
 sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://127.0.0.1
 ```
 
+### fetch CA Bundle for k8s integration
+
+```
+sudo cat /etc/step-ca/certs/intermediate_ca.crt /etc/step-ca/certs/root_ca.crt > ca_bundle.crt && chown xxx:xxx ca_bundle.crt
+```
+
 ## 2. Integrate PKI into kubernetes with cert-manager
+
+prerequisites: Kubernetes Node with helm installed
+
+### scp CA Bundle from pki node
+
+```
+scp pki-demo:ca_bundle.crt .
+```
+
+### try to curl CA
+
+```
+curl https://pki-demo.home.arpa
+```
+
+### add CA to system trust store
+
+```
+sudo cp ca_bundle.crt /usr/local/share/ca-certificates/ && sudo update-ca-certificates
+```
+
+### curl CA once more to confirm trust
+
+```
+curl https://pki-demo.home.arpa
+```
+
+### install step-cli and request cert as a test
+
+```
+wget https://dl.smallstep.com/cli/docs-ca-install/latest/step-cli_amd64.deb
+sudo dpkg -i step-cli_amd64.deb
+```
+```
+sudo step ca certificate k3s-demo.home.arpa k3s-demo.crt k3s-demo.key --acme https://pki-demo.home.arpa/acme/acme/directory --san k3s-demo.home.arpa --san k3s-demo --san 192.168.0.98
+```
+
+
+
 
 
 
