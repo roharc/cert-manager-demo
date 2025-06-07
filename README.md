@@ -12,7 +12,7 @@ wget https://dl.smallstep.com/certificates/docs-ca-install/latest/step-ca_amd64.
 sudo dpkg -i step-ca_amd64.deb
 ```
 
-### Setup system user   
+### Setup service user   
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#create-a-service-user-to-run-step-ca
 
