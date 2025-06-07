@@ -142,11 +142,18 @@ sudo step ca certificate k3s-demo.home.arpa k3s-demo.crt k3s-demo.key --acme htt
 
 https://cert-manager.io/docs/installation/helm/
 
-default values from here:
+default values from here:  
 https://artifacthub.io/packages/helm/cert-manager/cert-manager
 
 depending on environment it may be necessary to configure `podDnsPolicy: "Default"` in values which is NOT the default:
 https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+
+#### add helm repo
+
+```
+helm repo add jetstack https://charts.jetstack.io --force-update
+```
+#### install cert-manager
 
 ```
 helm install \
@@ -157,6 +164,12 @@ helm install \
   --values=my-certmgr-values.yaml \
   --set crds.enabled=true
 ```
+
+### 2.3 setup with cert-manager and ingress controller
+
+> :warning: **setup with ingress-controller and gateway-api are exclusive**: with a default k8s config you cannot have both at the same time as they're binding same ports!
+
+
 
 
 
