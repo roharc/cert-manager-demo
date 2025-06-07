@@ -222,6 +222,27 @@ k apply -f cert-manager-demo/ingress_manifests/ingress.yaml
 k get ingress nginx
 ```
 
+inspect the respective kubernetes resources: 
+
+```
+orders
+challenges
+certificates
+secrets
+```
+
+the generated secret is of type `Opaque` first, changes to type `kubernetes.io/tls` after the http01 challenge has succeded.  
+delete the secret to check auto-renewal and initiate a new challenge
+
+#### inspect the actual certificate retrieved from the secret
+
+```
+k get secret nginx-k3s-demo-home-arpa -ojson | jq '.data."tls.crt"' | tr -d '"' | base64 -d | openssl x509 --text --noout
+```
+
+
+
+
 
 
 
