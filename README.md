@@ -20,13 +20,13 @@ https://smallstep.com/docs/step-ca/certificate-authority-server-production/#crea
 sudo useradd --system --home /etc/step-ca --shell /bin/false step
 ```  
 
-### grant capability to bind portnumbers less than 1024 to step-ca binary
+### Grant capability to bind portnumbers less than 1024 to step-ca binary
 
 ```
 sudo setcap CAP_NET_BIND_SERVICE=+eip $(which step-ca)
 ```  
 
-### initialize CA
+### Initialize CA
 
 ```
 step ca init
@@ -46,7 +46,7 @@ Choose a password for your CA keys and first provisioner.
 ✔ [leave empty and we'll generate one]:
 ```
 
-### move step-ca to `/etc/step-ca` and change ownership
+### Move step-ca to `/etc/step-ca` and change ownership
 
 ```
 sudo mkdir /etc/step-ca
@@ -54,7 +54,7 @@ sudo mv ~/.step/* /etc/step-ca
 sudo chown -R step:step /etc/step-ca
 ```
 
-### modify paths in config files
+### Modify paths in config files
 
 ```
 sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/ca.json
@@ -62,14 +62,14 @@ sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/defaults.json
 ```
 (use `sed -i` to actually write the files after checking)
 
-### create passwordfile
+### Create passwordfile
 
 ```
 sudo vi /etc/step-ca/password.txt
 sudo chown step:step /etc/step-ca/password.txt
 ```
 
-### create unitfile, start and check service
+### Create unitfile, start and check service
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#running-step-ca-as-a-daemon
 ```
@@ -79,7 +79,7 @@ sudo vi  /etc/systemd/system/step-ca.service
 sudo systemctl enable --now step-ca && sudo systemctl status step-ca
 ```
 
-### add ACME provisioner and reload service
+### Add ACME provisioner and reload service
 
 ```
 sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url https://127.0.0.1 --root /etc/step-ca/certs/root_ca.crt
@@ -88,7 +88,7 @@ sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url htt
 sudo systemctl reload step-ca && sudo STEPPATH=/etc/step-ca step ca provisioner list --ca-url https://127.0.0.1
 ```
 
-## 2. integrate PKI into kubernetes with cert-manager
+## 2. Integrate PKI into kubernetes with cert-manager
 
 
 
