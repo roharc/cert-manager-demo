@@ -16,11 +16,15 @@ sudo dpkg -i step-ca_amd64.deb
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#create-a-service-user-to-run-step-ca
 
-`sudo useradd --system --home /etc/step-ca --shell /bin/false step`  
+```
+sudo useradd --system --home /etc/step-ca --shell /bin/false step
+```  
 
 ### grant capabilty to bind portnumbers less than 1024 to step-ca binary
 
-`sudo setcap CAP_NET_BIND_SERVICE=+eip $(which step-ca)`  
+```
+sudo setcap CAP_NET_BIND_SERVICE=+eip $(which step-ca)
+```  
 
 ### initialize CA
 
