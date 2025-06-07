@@ -1,5 +1,5 @@
 # How To: setup step CA and integrate into kubernetes with cert-manager  
-## Setup CA with step CA  
+## 1. Setup CA with step CA  
 
 ### Download and install packages  
 https://smallstep.com/docs/step-ca/installation/  
@@ -77,7 +77,7 @@ sudo STEPPATH=/etc/step-ca step ca provisioner add acme --type acme --ca-url htt
 systemctl reload step-ca
 ```
 
-## integrate PKI into kubernetes with cert-manager
+## 2. integrate PKI into kubernetes with cert-manager
 
 
 
