@@ -100,6 +100,7 @@ sudo cat /etc/step-ca/certs/intermediate_ca.crt /etc/step-ca/certs/root_ca.crt >
 ```
 
 ## 2. Integrate PKI into kubernetes with cert-manager
+### 2.1 adding CA to k8s node system trust store and request test certificate
 
 prerequisites: Kubernetes Node with helm installed
 
@@ -137,8 +138,25 @@ sudo dpkg -i step-cli_amd64.deb
 sudo step ca certificate k3s-demo.home.arpa k3s-demo.crt k3s-demo.key --acme https://pki-demo.home.arpa/acme/acme/directory --san k3s-demo.home.arpa --san k3s-demo --san 192.168.0.98
 ```
 
+### 2.2 install cert-manager
 
+https://cert-manager.io/docs/installation/helm/
 
+default values from here:
+https://artifacthub.io/packages/helm/cert-manager/cert-manager
+
+depending on environment it may be necessary to configure `podDnsPolicy: "Default"` in values which is NOT the default:
+https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+
+```
+helm install \
+  cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.17.0 \
+  --values=my-certmgr-values.yaml \
+  --set crds.enabled=true
+```
 
 
 
