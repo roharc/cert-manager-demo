@@ -37,7 +37,7 @@ step ca init
 What would you like to name your new PKI?
 ✔ (e.g. Smallstep): pki-demo
 What DNS names or IP addresses will clients use to reach your CA?
-✔ (e.g. ca.example.com[,10.1.2.3,etc.]): pki-demo.home.arpa
+✔ (e.g. ca.example.com[,10.1.2.3,etc.]): pki-demo,pki-demo.home.arpa,192.168.0.99,127.0.0.1
 What IP and port will your new CA bind to? (:443 will bind to 0.0.0.0:443)
 ✔ (e.g. :443 or 127.0.0.1:443): :443
 What would you like to name the CA's first provisioner?
