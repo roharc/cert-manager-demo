@@ -38,7 +38,7 @@ Choose a password for your CA keys and first provisioner.
 ✔ [leave empty and we'll generate one]:
 ```
 
-### move step-ca to /etc/step-ca and change ownership
+### move step-ca to `/etc/step-ca` and change ownership
 
 ```
 sudo mkdir /etc/step-ca
@@ -52,7 +52,7 @@ sudo chown -R step:step /etc/step-ca
 sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/ca.json
 sudo sed 's/home\/xxx\/.step/etc\/step-ca/g' /etc/step-ca/config/defaults.json
 ```
-
+(use `sed -i` to actually write the files after checking)
 ### create unitfile
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#running-step-ca-as-a-daemon
