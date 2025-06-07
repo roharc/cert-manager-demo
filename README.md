@@ -102,7 +102,7 @@ sudo cat /etc/step-ca/certs/intermediate_ca.crt /etc/step-ca/certs/root_ca.crt >
 ## 2. Integrate PKI into kubernetes with cert-manager
 ### 2.1 adding CA to k8s node system trust store and request test certificate
 
-prerequisites: Kubernetes Node with helm installed
+> :warning: **Prerequisites:**: Kubernetes Node with helm installed
 
 #### scp CA Bundle from pki node
 
@@ -225,10 +225,12 @@ k get ingress nginx
 inspect the respective kubernetes resources: 
 
 ```
+clusterissuers
 orders
 challenges
 certificates
 secrets
+ingress
 ```
 
 the generated secret is of type `Opaque` first, changes to type `kubernetes.io/tls` after the http01 challenge has succeded.  
@@ -240,8 +242,50 @@ delete the secret to check auto-renewal and initiate a new challenge
 k get secret nginx-k3s-demo-home-arpa -ojson | jq '.data."tls.crt"' | tr -d '"' | base64 -d | openssl x509 --text --noout
 ```
 
+### 2.5 setup with gateway-api
+
+> :warning: **setup with ingress controller (2.4) and gateway-api (2.5) are exclusive**:
+with a default k8s config you cannot have both at the same time as they're binding same ports!
+ 
+if you deployed an ingress controller as in step 2.4 you should clean up everything before continuing
+
+cleanup:
+```
+k delete clusterissuer acme-pki-demo
+k delete ingress nginx 
+helm delete my-ingress-nginx
+```
+
+#### 2.51 enable gateway-api enable certmanager
+
+```
+helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager \
+  --set config.apiVersion="controller.config.cert-manager.io/v1alpha1" \
+  --set config.kind="ControllerConfiguration" \
+  --set config.enableGatewayAPI=true
+```
+
+### install crds and nginx-gateway-fabric:
+
+```
+kubectl kustomize "https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard?ref=v1.6.2" | kubectl apply -f -
+```
+```
+helm install ngf oci://ghcr.io/nginx/charts/nginx-gateway-fabric --create-namespace -n nginx-gateway
+```
+
+#### 2.52 apply manifests
+##### don't forget to label default namespace:
+```
+gateway-access: "true"
+```
+
+first edit `cert-manager-demo/gateway_manifests/clusterissuer.yaml` and insert `.spec.acme.caBundle` value with the output of `base64 ca_bundle.crt | tr -d "\n"`
 
 
+```
+k apply -f  cert-manager-demo/gateway_manifests/
+```
 
 
 
