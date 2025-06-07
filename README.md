@@ -201,6 +201,14 @@ helm install my-ingress-nginx ingress-nginx/ingress-nginx --version 4.12.1
 
 #### deploy and inspect a clusterissuer
 
+create value for clusterissuers `.spec.acme.caBundle`:
+
+```
+base64 ca_bundle.crt | tr -d "\n"
+```
+
+then edit manifest and apply file:
+
 ```
 k apply -f cert-manager-demo/ingress_manifests/clusterissuer.yaml
 ```
