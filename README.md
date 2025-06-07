@@ -15,6 +15,7 @@ sudo dpkg -i step-ca_amd64.deb
 ### Setup system user   
 
 https://smallstep.com/docs/step-ca/certificate-authority-server-production/#create-a-service-user-to-run-step-ca
+
 `sudo useradd --system --home /etc/step-ca --shell /bin/false step`  
 
 ### grant capabilty to bind portnumbers less than 1024 to step-ca binary
