@@ -143,7 +143,7 @@ sudo step ca certificate k3s-demo.home.arpa k3s-demo.crt k3s-demo.key --acme htt
 #### apply manifests
 ```
 k apply -f cert-manager-demo/application_manifests/nginx-pod.yaml
-k apply -f application_manifests/nginx-service.yaml
+k apply -f cert-manager-demo/application_manifests/nginx-service.yaml
 ```
 
 #### retrieve CLUSTER-IP 
