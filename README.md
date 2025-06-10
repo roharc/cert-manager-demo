@@ -178,15 +178,15 @@ helm install \
   cert-manager jetstack/cert-manager \
   --namespace cert-manager \
   --create-namespace \
-  --version v1.17.0 \
-  --values=my-certmgr-values.yaml \
+  --version v1.17.2 \
+  --values=certmgr-values.yaml \
   --set crds.enabled=true
 ```
 
 ### 2.4 setup with ingress controller
 
 > :warning: **setup with ingress controller (2.4) and gateway-api (2.5) are exclusive**:  
-with a default k8s config you cannot have both at the same time as they're binding same ports!
+with a default config you cannot have both at the same time as they're binding same ports!
 
 #### install ingress-nginx
 
@@ -245,7 +245,7 @@ k get secret nginx-k3s-demo-home-arpa -ojson | jq '.data."tls.crt"' | tr -d '"' 
 ### 2.5 setup with gateway-api
 
 > :warning: **setup with ingress controller (2.4) and gateway-api (2.5) are exclusive**:
-with a default k8s config you cannot have both at the same time as they're binding same ports!
+with a default config you cannot have both at the same time as they're binding same ports!
  
 if you deployed an ingress controller as in step 2.4 you should clean up everything before continuing
 
