@@ -253,10 +253,12 @@ cleanup:
 ```
 k delete clusterissuer acme-pki-demo
 k delete ingress nginx 
+k delete secret nginx nginx-k3s-demo-home-arpa
 helm delete my-ingress-nginx
 ```
 
 #### 2.51 enable gateway-api for certmanager
+https://cert-manager.io/docs/usage/gateway/
 
 ```
 helm upgrade --install cert-manager jetstack/cert-manager --namespace cert-manager \
